@@ -32,17 +32,25 @@ public class Node {
         return name;
     }
 
-    public boolean hasMolecule(String moleculeName) {
-        return this.molecules.contains(moleculeName);
+    public boolean sameMolecules(Set<String> molecules) {
+        return molecules.equals(this.molecules);
+    }
+
+    public boolean hasMolecule(Set<String> moleculeName) {
+        return this.molecules.containsAll(moleculeName);
+    }
+
+    public boolean hasNotMolecule(Set<String> moleculesName) {
+        return moleculesName.stream().noneMatch(molecules::contains);
     }
 
     @Override
     public String toString() {
         var res = new StringBuffer();
         res.append("succ:{");
-        successors.forEach((succName, _ignore) -> res.append(succName));
+        successors.forEach((succName, _ignore) -> res.append(succName).append(";"));
         res.append("} -- pred:{");
-        predecessors.forEach((predName, _ignore) -> res.append(predName));
+        predecessors.forEach((predName, _ignore) -> res.append(predName).append(";"));
         res.append("}");
         return res.toString();
     }

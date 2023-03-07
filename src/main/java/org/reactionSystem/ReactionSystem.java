@@ -33,6 +33,10 @@ public class ReactionSystem {
                     names.add(l.get(j));
             graph.addNode(names);
         }
+        rules.forEach(rule -> {
+            var successor = graph.getNode(rule.getResult());
+            graph.getNodes(rule.getActivators(), rule.getInhibitors()).forEach(e -> e.addSuccessor(successor));
+        });
     }
 
     @Override
