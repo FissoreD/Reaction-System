@@ -16,6 +16,10 @@ public class ReactionSystem {
         this.molecules = new HashSet<>();
     }
 
+    protected Graph getGraph(){
+        return graph;
+    }
+
     public void addRule(Rule rule) {
         this.rules.add(rule);
         molecules.addAll(rule.getActivators());

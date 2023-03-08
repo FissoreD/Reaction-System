@@ -1,11 +1,15 @@
 package org.reactionSystem;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.*;
 
 public class Node {
     private final String name;
     private final Set<String> molecules;
+    @JsonSerialize(using = NodeMapSerializer.class)
     private final Map<String, Node> successors;
+    @JsonSerialize(using = NodeMapSerializer.class)
     private final Map<String, Node> predecessors;
 
     public Node(List<String> moleculesName) {

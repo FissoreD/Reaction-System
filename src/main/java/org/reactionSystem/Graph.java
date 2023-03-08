@@ -1,8 +1,11 @@
 package org.reactionSystem;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.*;
 
 public class Graph {
+    @JsonSerialize(using = GraphMapSerializer.class)
     private final Map<String, Node> nodes;
 
     public Graph(Node... nodes) {
