@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Create Object from JSON String</h2>
+
+<p id="demo"></p>
+
+<script>
+    let text = '{"nodes":[{"name":"","successors":[],"predecessors":[]},{"name":"a-b-c","successors":["a","a-b"],"predecessors":[]},{"name":"a","successors":["a"],"predecessors":["a-b-c","a","a-c"]},{"name":"b","successors":[],"predecessors":[]},{"name":"c","successors":[],"predecessors":[]},{"name":"a-c","successors":["a"],"predecessors":[]},{"name":"a-b","successors":[],"predecessors":["a-b-c","b-c"]},{"name":"b-c","successors":["a-b"],"predecessors":[]}]}';
+    const obj = JSON.parse(text);
+    document.getElementById("demo").innerHTML =
+    "Name= "+obj.nodes[1].name + " successors=" + obj.nodes[1].successors+ " predecessors=" + obj.nodes[1].predecessors;
+</script>
+
+</body>
+</html>
