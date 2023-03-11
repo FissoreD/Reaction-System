@@ -16,7 +16,7 @@ public class ReactionSystem {
         this.molecules = new HashSet<>();
     }
 
-    protected Graph getGraph(){
+    protected Graph getGraph() {
         return graph;
     }
 
@@ -38,7 +38,7 @@ public class ReactionSystem {
             graph.addNode(names);
         }
         rules.forEach(rule -> {
-            var successor = graph.getNode(rule.getResult());
+            var successor = graph.getNodeByName(rule.getResult());
             graph.getNodes(rule.getActivators(), rule.getInhibitors()).forEach(e -> e.addSuccessor(successor));
         });
     }
