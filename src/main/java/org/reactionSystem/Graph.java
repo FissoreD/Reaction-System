@@ -45,4 +45,8 @@ public class Graph {
     public Node getNode(Set<String> result) {
         return this.nodes.values().stream().filter(e -> e.sameMolecules(result)).findFirst().get();
     }
+
+    public Map<String, Node> getNodes() {
+        return nodes;
+    }
 }
