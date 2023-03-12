@@ -2,6 +2,7 @@ package org.reactionSystem;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.reactionSystem.jsonGraph.JsonGraph;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,7 @@ public class Main {
         //System.out.println(model);
         String nodeJSON = null;
         try {
-            nodeJSON = new ObjectMapper().writeValueAsString(model.getGraph());
+            nodeJSON = JsonGraph.generateJSONGraph(model.getGraph());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

@@ -33,6 +33,10 @@ public class Graph {
         return this.nodes.values().stream().filter(e -> e.hasMolecule(activator) && e.hasNotMolecule(inhibitors)).toList();
     }
 
+    public Collection<Node> getNodes(){
+        return nodes.values();
+    }
+
     @Override
     public String toString() {
         var res = new StringBuffer();
