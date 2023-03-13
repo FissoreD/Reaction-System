@@ -36,6 +36,22 @@ public class Graph {
         return filterNodes(fixedPointPred).toList();
     }
 
+    public Set<Node> getPeriodicPoints() {
+        Tarjan tarjan=new Tarjan();
+        tarjan.findSCCs_Tarjan(this);
+        List<List<String>> composante=tarjan.getComposante();
+        Set<Node> res=new HashSet<>();
+
+        for(List<String> l: composante){
+            if(l.size()>1) {
+                l.forEach(e-> res.add(getNodes().get(e)));
+
+            }
+        }
+
+        return res;
+    }
+
     /**
      * Returns the list of nodes of the graphs having the activators,
      * but not the inhibitors

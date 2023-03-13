@@ -5,7 +5,7 @@ import org.reactionSystem.Graph;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FixedPointTest {
+public class PeriodicPointTest {
 
     private Graph graph;
 
@@ -15,21 +15,21 @@ public class FixedPointTest {
     }
 
     @Test
-    void fixedPoint1() {
+    void periodicPoint1() {
         graph = UtilTest.graph1;
-        assertTrue(graph.getFixedPoints().isEmpty());
+        assertTrue(graph.getPeriodicPoints().isEmpty());
     }
 
     @Test
-    void fixedPoint2() {
+    void periodicPoint2() {
         graph = UtilTest.graph2;
-        assertEquals(1, graph.getFixedPoints().size());
+        assertTrue(graph.getPeriodicPoints().isEmpty());
     }
 
     @Test
     void periodicPoint3() {
         graph = UtilTest.graph3;
-        assertTrue(graph.getFixedPoints().isEmpty());
+        assertEquals(3, graph.getPeriodicPoints().size());
     }
 }
 
