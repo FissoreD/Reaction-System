@@ -48,6 +48,14 @@ public class Node {
         return moleculesName.stream().noneMatch(molecules::contains);
     }
 
+    public Map<String, Node> getSuccessors() {
+        return successors;
+    }
+
+    public Map<String, Node> getPredecessors() {
+        return predecessors;
+    }
+
     @Override
     public String toString() {
         var res = new StringBuffer();
