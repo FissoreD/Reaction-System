@@ -4,6 +4,7 @@ import org.reactionSystem.Node;
 public class UtilTest {
     public static Graph graph1;
     public static Graph graph2;
+    public static Graph graph3;
 
     public static void setUp() {
         Node P1 = new Node("P1");
@@ -28,6 +29,17 @@ public class UtilTest {
         P3bis.addSuccessor(P3bis);
 
         graph2 = new Graph(P1bis, P2bis, P3bis, M1bis);
+
+        Node A = new Node("A");
+        Node B = new Node("B");
+        Node C = new Node("C");
+
+
+        A.addSuccessor(B);
+        B.addSuccessor(C);
+        C.addSuccessor(A);
+
+        graph3= new Graph(A, B, C);
     }
 
 
