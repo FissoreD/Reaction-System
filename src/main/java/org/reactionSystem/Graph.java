@@ -63,24 +63,29 @@ public class Graph {
     }
 
     public List<Node> getFixedPoints() {
-        Predicate<Node> fixedPointPred = e -> e.getSuccessors().size() == 1 && e.getSuccessors().get(e.getName()) != null;
+        Predicate<Node> fixedPointPred = e -> e.getSuccessors().get(e.getName()) != null;
         return filterNodes(fixedPointPred).toList();
     }
 
     public Set<Node> getPeriodicPoints() {
-        Tarjan tarjan=new Tarjan();
+        Tarjan tarjan = new Tarjan();
         tarjan.findSCCs_Tarjan(this);
-        List<List<String>> composante=tarjan.getComposante();
-        Set<Node> res=new HashSet<>();
+        List<List<String>> composante = tarjan.getComposante();
+        Set<Node> res = new HashSet<>();
 
-        for(List<String> l: composante){
-            if(l.size()>1) {
-                l.forEach(e-> res.add(getNodes().get(e)));
+        for (List<String> l : composante) {
+            if (l.size() > 1) {
+                l.forEach(e -> res.add(getNodes().get(e)));
 
             }
         }
 
         return res;
+    }
+
+    public void addEdgeToNil() {
+        Predicate<Node> nilPred = e -> e.getSuccessors().size() == 0;
+        filterNodes(nilPred).forEach(e -> e.addSuccessor(getNodeByName("")));
     }
 
     /**
@@ -120,6 +125,10 @@ public class Graph {
             return stream.get();
         else
             throw new RuntimeException("Node " + result + " not found");
+    }
+
+    public Node getNodeByName(String... result) {
+        return getNodeByName(Set.of(result));
     }
 
     public Node getNodeByName(String nodeName) {
