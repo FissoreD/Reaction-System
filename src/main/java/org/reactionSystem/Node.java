@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.*;
 
 public class Node {
+
+    private static int idCnt = 0;
+
+    public final int id;
     private final String name;
     private final Set<String> molecules;
     @JsonSerialize(using = NodeMapSerializer.class)
@@ -12,11 +16,16 @@ public class Node {
     @JsonSerialize(using = NodeMapSerializer.class)
     private final Map<String, Node> predecessors;
 
-    public Node(List<String> moleculesName) {
+    public Node(List<String> moleculesName, int id) {
         this.molecules = new HashSet<>(moleculesName);
         this.name = String.join("-", this.molecules);
         this.successors = new HashMap<>();
         this.predecessors = new HashMap<>();
+        this.id = id;
+    }
+
+    public Node(List<String> moleculesName) {
+        this(moleculesName, idCnt++);
     }
 
     public Node(String... moleculesName) {
@@ -50,6 +59,10 @@ public class Node {
 
     public Map<String, Node> getSuccessors() {
         return successors;
+    }
+
+    public Map<String, Node> getPredecessors() {
+        return predecessors;
     }
 
     @Override
