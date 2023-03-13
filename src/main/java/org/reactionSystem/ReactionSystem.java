@@ -39,8 +39,19 @@ public class ReactionSystem {
         }
         rules.forEach(rule -> {
             var successor = graph.getNodeByName(rule.getResult());
-            graph.getNodes(rule.getActivators(), rule.getInhibitors()).forEach(e -> e.addSuccessor(successor));
+            graph.getNodes(rule.getActivators(), rule.getInhibitors()).forEach(curr -> {
+                if (curr.getSuccessors().size() == 0)
+                    curr.addSuccessor(successor);
+                else {
+                    var oldSuccessor = curr.getSuccessors().values().stream().findFirst().get();
+                    curr.removeSuccessor(oldSuccessor);
+                    var molecules = new HashSet<>(oldSuccessor.getMolecules());
+                    molecules.addAll(successor.getMolecules());
+                    curr.addSuccessor(graph.getNodeByName(molecules));
+                }
+            });
         });
+        graph.addEdgeToNil();
     }
 
     @Override
