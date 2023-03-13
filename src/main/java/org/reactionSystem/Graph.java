@@ -1,6 +1,10 @@
 package org.reactionSystem;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.reactionSystem.jsonGraph.JsonGraph;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -19,12 +23,39 @@ public class Graph {
         this.nodes = new HashMap<>();
     }
 
+    public static Graph fromJSON(String graphString) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = mapper.readTree(graphString);
+        Graph graph = new Graph();
+        var nodes = json.get("nodes");
+        nodes.elements().forEachRemaining(e -> graph.addNode(
+                e.get("data").get("name").asText(),
+                e.get("data").get("id").asInt()));
+        var edges = json.get("edges");
+        edges.elements().forEachRemaining(e -> graph.addEdge(
+                e.get("data").get("sourceName").asText(),
+                e.get("data").get("targetName").asText()));
+        return graph;
+    }
+
     public void addNode(List<String> nodeName) {
         this.addNode(new Node(nodeName));
     }
 
+    public void addNode(String nodeName, int id) {
+        this.addNode(new Node(List.of(nodeName.split("-")), id));
+    }
+
+    public void addNode(String nodeName) {
+        this.addNode(List.of(nodeName));
+    }
+
     public void addNode(Node node) {
         this.nodes.put(node.getName(), node);
+    }
+
+    public void addEdge(String node1, String node2) {
+        this.getNodeByName(node1).addSuccessor(this.getNodeByName(node2));
     }
 
     private Stream<Node> filterNodes(Predicate<Node> pred) {
@@ -54,6 +85,14 @@ public class Graph {
         return res.toString();
     }
 
+    public String toJson() {
+        try {
+            return JsonGraph.generateJSONGraph(this);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * @param result a set of names
      * @return the nodes having the same name as the one passed in result
@@ -65,6 +104,10 @@ public class Graph {
             return stream.get();
         else
             throw new RuntimeException("Node " + result + " not found");
+    }
+
+    public Node getNodeByName(String nodeName) {
+        return nodes.get(nodeName);
     }
 
     public Map<String, Node> getNodes() {
