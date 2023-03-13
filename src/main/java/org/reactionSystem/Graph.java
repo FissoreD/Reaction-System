@@ -84,6 +84,8 @@ public class Graph {
     }
 
     public void addEdgeToNil() {
+        if (this.nodes.get("") == null)
+            addNode("");
         Predicate<Node> nilPred = e -> e.getSuccessors().size() == 0;
         filterNodes(nilPred).forEach(e -> e.addSuccessor(getNodeByName("")));
     }
