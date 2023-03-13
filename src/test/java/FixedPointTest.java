@@ -17,13 +17,13 @@ public class FixedPointTest {
     @Test
     void fixedPoint1() {
         graph = UtilTest.graph1;
-        assertTrue(graph.findFixedPoints().isEmpty());
+        assertTrue(graph.getFixedPoints().isEmpty());
     }
 
     @Test
     void fixedPoint2() {
         graph = UtilTest.graph2;
-        assertEquals(1, graph.findFixedPoints().size());
+        assertEquals(1, graph.getFixedPoints().size());
     }
 }
 

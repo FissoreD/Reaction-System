@@ -31,7 +31,7 @@ public class Graph {
         return nodes.values().stream().filter(pred);
     }
 
-    public List<Node> findFixedPoints() {
+    public List<Node> getFixedPoints() {
         Predicate<Node> fixedPointPred = e -> e.getSuccessors().size() == 1 && e.getSuccessors().get(e.getName()) != null;
         return filterNodes(fixedPointPred).toList();
     }
