@@ -14,14 +14,20 @@ public class JsonTest {
     }
 
     @Test
-    void JSON_reflexive() throws JsonProcessingException {
+    void JSON_reflexive1() throws JsonProcessingException {
         graph = UtilTest.graph1;
         assertEquals(Graph.fromJSON(graph.toJson()).toJson(), graph.toJson());
     }
 
     @Test
-    void fixedPoint2() throws JsonProcessingException {
+    void JSON_reflexive2() throws JsonProcessingException {
         graph = UtilTest.graph2;
+        assertEquals(Graph.fromJSON(graph.toJson()).toJson(), graph.toJson());
+    }
+
+    @Test
+    void JSON_reflexive3() throws JsonProcessingException {
+        graph = UtilTest.graph3;
         assertEquals(Graph.fromJSON(graph.toJson()).toJson(), graph.toJson());
     }
 }
