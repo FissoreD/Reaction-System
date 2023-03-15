@@ -10,24 +10,24 @@ public class PeriodicPointTest {
     private Graph graph;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         UtilTest.setUp();
     }
 
     @Test
-    void periodicPoint1() {
+    public void periodicPoint1() {
         graph = UtilTest.graph1;
         assertTrue(graph.getPeriodicPoints().isEmpty());
     }
 
     @Test
-    void periodicPoint2() {
+    public void periodicPoint2() {
         graph = UtilTest.graph2;
         assertTrue(graph.getPeriodicPoints().isEmpty());
     }
 
     @Test
-    void periodicPoint3() {
+    public void periodicPoint3() {
         graph = UtilTest.graph3;
         assertEquals(3, graph.getPeriodicPoints().size());
     }

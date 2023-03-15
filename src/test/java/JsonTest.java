@@ -9,24 +9,24 @@ public class JsonTest {
     private Graph graph;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         UtilTest.setUp();
     }
 
     @Test
-    void JSON_reflexive1() throws JsonProcessingException {
+    public void JSON_reflexive1() throws JsonProcessingException {
         graph = UtilTest.graph1;
         assertEquals(Graph.fromJSON(graph.toJson()).toJson(), graph.toJson());
     }
 
     @Test
-    void JSON_reflexive2() throws JsonProcessingException {
+    public void JSON_reflexive2() throws JsonProcessingException {
         graph = UtilTest.graph2;
         assertEquals(Graph.fromJSON(graph.toJson()).toJson(), graph.toJson());
     }
 
     @Test
-    void JSON_reflexive3() throws JsonProcessingException {
+    public void JSON_reflexive3() throws JsonProcessingException {
         graph = UtilTest.graph3;
         assertEquals(Graph.fromJSON(graph.toJson()).toJson(), graph.toJson());
     }

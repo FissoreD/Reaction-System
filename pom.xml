@@ -7,7 +7,7 @@
     <groupId>org.reactionSystem</groupId>
     <artifactId>Reaction-System</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
 
     <properties>
@@ -54,6 +54,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
