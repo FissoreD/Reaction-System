@@ -1,19 +1,18 @@
 package org.reactionSystem;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.reactionSystem.jsonGraph.JsonGraph;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        ReactionSystem model = Parser.parseFile("./src/main/resources/input1.txt");
+    public static void main(String[] args) throws IOException {
+        ReactionSystem model = Parser.parseCnt(args[0]);
         model.buildGraph();
-        String nodeJSON;
-        try {
-            nodeJSON = JsonGraph.generateJSONGraph(model.getGraph());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(nodeJSON);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter("test.txt"));
+        writer.write(model.getGraph().toJson());
+        writer.close();
+        
+        System.out.println(model.getGraph().toJson());
     }
 }
