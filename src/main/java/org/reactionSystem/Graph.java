@@ -78,7 +78,7 @@ public class Graph {
         Set<Node> res = new HashSet<>();
 
         for (List<String> l : composante) {
-            if ((n==0 & l.size() > 1) || (n!=0 & l.size()==n)) {
+            if ((n==0 && l.size() > 1) || (n!=0 && l.size()==n)) {
                 l.forEach(e -> res.add(getNodes().get(e)));
 
             }
