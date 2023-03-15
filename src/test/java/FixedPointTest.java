@@ -10,24 +10,24 @@ public class FixedPointTest {
     private Graph graph;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         UtilTest.setUp();
     }
 
     @Test
-    void fixedPoint1() {
+    public void fixedPoint1() {
         graph = UtilTest.graph1;
         assertTrue(graph.getFixedPoints().isEmpty());
     }
 
     @Test
-    void fixedPoint2() {
+    public void fixedPoint2() {
         graph = UtilTest.graph2;
         assertEquals(1, graph.getFixedPoints().size());
     }
 
     @Test
-    void fixedPoint3() {
+    public void fixedPoint3() {
         graph = UtilTest.graph3;
         assertTrue(graph.getFixedPoints().isEmpty());
     }
