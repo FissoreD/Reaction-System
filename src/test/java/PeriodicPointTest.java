@@ -31,6 +31,24 @@ public class PeriodicPointTest {
         graph = UtilTest.graph3;
         assertEquals(3, graph.getPeriodicPoints().size());
     }
+
+    @Test
+    void periodicPoint4() {
+        graph = UtilTest.graph1;
+        assertTrue(graph.getNPeriodicPoints(2).isEmpty());
+    }
+
+    @Test
+    void periodicPoint5() {
+        graph = UtilTest.graph2;
+        assertTrue(graph.getNPeriodicPoints(3).isEmpty());
+    }
+
+    @Test
+    void periodicPoint6() {
+        graph = UtilTest.graph3;
+        assertEquals(3, graph.getNPeriodicPoints(3).size());
+    }
 }
 
 
