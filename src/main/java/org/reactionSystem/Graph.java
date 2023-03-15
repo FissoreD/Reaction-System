@@ -68,13 +68,17 @@ public class Graph {
     }
 
     public Set<Node> getPeriodicPoints() {
+        return getNPeriodicPoints(0);
+    }
+
+    public Set<Node> getNPeriodicPoints(int n) {
         Tarjan tarjan = new Tarjan();
         tarjan.findSCCs_Tarjan(this);
         List<List<String>> composante = tarjan.getComposante();
         Set<Node> res = new HashSet<>();
 
         for (List<String> l : composante) {
-            if (l.size() > 1) {
+            if ((n==0 && l.size() > 1) || (n!=0 && l.size()==n)) {
                 l.forEach(e -> res.add(getNodes().get(e)));
 
             }
