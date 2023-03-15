@@ -41,12 +41,26 @@ public class Node {
         node.addSuccessor(this);
     }
 
+    public void removeSuccessor(Node node) {
+        this.successors.remove(node.name);
+        node.predecessors.remove(this.name, this);
+    }
+
+    public void removePredecessor(Node node) {
+        node.removePredecessor(this);
+    }
+
+
     public String getName() {
         return name;
     }
 
     public boolean sameMolecules(Set<String> molecules) {
         return molecules.equals(this.molecules);
+    }
+
+    public Set<String> getMolecules() {
+        return molecules;
     }
 
     public boolean hasMolecule(Set<String> moleculeName) {

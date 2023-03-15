@@ -27,7 +27,7 @@ public class FixedPointTest {
     }
 
     @Test
-    public void periodicPoint3() {
+    public void fixedPoint3() {
         graph = UtilTest.graph3;
         assertTrue(graph.getFixedPoints().isEmpty());
     }
