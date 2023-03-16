@@ -8,6 +8,7 @@ import org.reactionSystem.jsonGraph.JsonGraph;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Graph {
@@ -85,6 +86,42 @@ public class Graph {
         }
 
         return res;
+    }
+
+    public Set<Node> getUltimatelyPeriodicPoint() {
+        Set<Node> PP = getPeriodicPoints();
+        Set<String> PPName = PP.stream().map(Node::getName).collect(Collectors.toSet());
+
+        Set<Node> res = new HashSet<>();
+
+        for (Map.Entry<String, Node> entry : getNodes().entrySet()) {
+            if(!PPName.contains(entry.getKey()) && dfs(entry.getKey(), new HashMap<String, Integer>(), PPName)){
+                res.add(entry.getValue());
+            }
+        }
+
+
+        return res;
+    }
+
+    private boolean dfs(String start, Map<String, Integer> visit, Set<String> PP) {
+        int index=0;
+        Stack<String> s = new Stack<>();
+        s.push(start);
+        while (!s.isEmpty()) {
+            String v = s.pop();
+            if (visit.get(v)==null) { //v not visited
+                visit.put(v, index);
+                if(PP.contains(v)){
+                    return true;
+                }
+                index += 1;
+                for (Map.Entry<String, Node> entry : getNodes().get(v).getSuccessors().entrySet()) {
+                    s.push(entry.getKey());
+                }
+            }
+        }
+        return false;
     }
 
     public void addEdgeToNil() {
