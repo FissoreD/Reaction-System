@@ -65,7 +65,7 @@ public class Main {
             };
         }
         writer.write(cnt);
-        System.out.println(cnt);
+//        System.out.println(cnt);
         writer.close();
     }
 }
