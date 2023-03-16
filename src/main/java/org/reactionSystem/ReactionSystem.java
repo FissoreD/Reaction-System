@@ -32,7 +32,7 @@ public class ReactionSystem {
         var maxNumberOfSubSets = 1 << l.size();
         for (int i = 0; i < maxNumberOfSubSets; i++) {
             var names = new ArrayList<String>();
-            for (int j = 0; j < maxNumberOfSubSets; j++)
+            for (int j = 0; j < l.size(); j++)
                 if ((i & (1 << j)) > 0)
                     names.add(l.get(j));
             graph.addNode(names);

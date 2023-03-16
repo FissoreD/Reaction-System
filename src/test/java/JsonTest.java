@@ -41,8 +41,14 @@ public class JsonTest {
     }
 
     @Test
-    public void graphFromString() {
+    public void graphFromString1() {
         var m = Parser.parseCnt("a;;b\nb;;a\n;;c\nc;;d\nd;;");
+        m.buildGraph();
+    }
+
+    @Test
+    public void graphFromString2() {
+        var m = Parser.parseCnt("a e ff q fq sdf fdqq f f d s  q sd f q sd f qs df ;b;c");
         m.buildGraph();
     }
 }
