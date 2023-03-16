@@ -81,12 +81,13 @@ public class Node {
 
     @Override
     public String toString() {
-        var res = new StringBuffer();
-        res.append("succ:{");
-        successors.forEach((succName, _ignore) -> res.append(succName).append(";"));
-        res.append("} -- pred:{");
-        predecessors.forEach((predName, _ignore) -> res.append(predName).append(";"));
-        res.append("}");
-        return res.toString();
+//        var res = new StringBuffer();
+//        res.append("succ:{");
+//        successors.forEach((succName, _ignore) -> res.append(succName).append(";"));
+//        res.append("} -- pred:{");
+//        predecessors.forEach((predName, _ignore) -> res.append(predName).append(";"));
+//        res.append("}");
+//        return res.toString();
+        return this.name.equals("") ? "nil" : this.name;
     }
 }

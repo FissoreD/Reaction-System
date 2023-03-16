@@ -2,6 +2,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.reactionSystem.Graph;
+import org.reactionSystem.Parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,5 +30,19 @@ public class JsonTest {
     public void JSON_reflexive3() throws JsonProcessingException {
         graph = UtilTest.graph3;
         assertEquals(Graph.fromJSON(graph.toJson()).toJson(), graph.toJson());
+    }
+
+    @Test
+    public void JSON_fromTxt() throws JsonProcessingException {
+        var model = Parser.parseCnt("a;b;b");
+        model.buildGraph();
+        var json = model.getGraph().toJson();
+        Graph.fromJSON(json);
+    }
+
+    @Test
+    public void graphFromString() {
+        var m = Parser.parseCnt("a;;b\nb;;a\n;;c\nc;;d\nd;;");
+        m.buildGraph();
     }
 }

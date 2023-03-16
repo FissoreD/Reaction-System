@@ -10,7 +10,8 @@ import java.util.List;
 
 public class Parser {
 
-    public static String[] getAtoms(String s) {
+    public static String[] getAtoms(String[] cnt, int pos) {
+        var s = pos < cnt.length ? cnt[pos] : "";
         var cleanStr = s.strip();
         return cleanStr.equals("") ? new String[]{} : cleanStr.split(" ");
     }
@@ -19,9 +20,9 @@ public class Parser {
         ReactionSystem reactionSystem = new ReactionSystem();
         input.forEach(line -> {
             var cnt = line.strip().split(";");
-            var attractors = getAtoms(cnt[0]);
-            var inhibitors = getAtoms(cnt[1]);
-            var result = getAtoms(cnt[2]);
+            var attractors = getAtoms(cnt, 0);
+            var inhibitors = getAtoms(cnt, 1);
+            var result = getAtoms(cnt, 2);
             reactionSystem.addRule(new Rule(attractors, inhibitors, result));
         });
         return reactionSystem;

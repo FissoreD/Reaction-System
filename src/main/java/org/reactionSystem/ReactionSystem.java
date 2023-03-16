@@ -16,7 +16,7 @@ public class ReactionSystem {
         this.molecules = new HashSet<>();
     }
 
-    protected Graph getGraph() {
+    public Graph getGraph() {
         return graph;
     }
 
