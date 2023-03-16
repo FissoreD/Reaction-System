@@ -1,5 +1,7 @@
 package org.reactionSystem;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -15,18 +17,21 @@ import static org.kohsuke.args4j.OptionHandlerFilter.ALL;
 
 public class Main {
 
-    @Option(name="-buildGraph",usage="give a set of rules to build a graph with")
-    private String fomulas=null;
-    @Option(name="-f",usage="set file path to save graph in")
-    private String fileName = "test.txt";
-
-
     @Argument
-    private List<String> arguments = new ArrayList<String>();
+    private List<String> arguments = new ArrayList<>();
+    @Option(name = "-f", usage = "set file path to save graph in")
+    private String fileName;
+
+    @Option(name = "-cnt", usage = "the content of the request")
+    private String cntJson;
+
+    public static void main(String[] args) throws IOException {
+        new Main().doMain(args);
+    }
 
     public void doMain(String[] args) throws IOException {
         CmdLineParser parser = new CmdLineParser(this);
-
+        arguments = arguments;
         try {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
@@ -37,22 +42,30 @@ public class Main {
             System.err.println();
 
             // print option sample. This is useful some time
-            System.err.println("  Example: java Main"+parser.printExample(ALL));
+            System.err.println("  Example: java Main" + parser.printExample(ALL));
 
             return;
         }
-        if(fomulas!=null){
-            ReactionSystem model = Parser.parseCnt(fomulas);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = mapper.readTree(cntJson);
+        String cnt = "";
+        var mode = json.get("mode").asInt();
+        if (mode == 1) {
+            ReactionSystem model = Parser.parseCnt(json.get("cnt").asText());
             model.buildGraph();
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-            writer.write(model.getGraph().toJson());
-            writer.close();
-            System.out.println(model.getGraph().toJson());
+            cnt = model.getGraph().toJson();
+        } else {
+            var jsonCnt = json.get("cnt");
+            Graph graph = Graph.fromJSON(jsonCnt.get("graph"));
+            cnt = switch (mode) {
+                case 2 -> graph.getFixedPoints().toString();
+                case 3 -> graph.getNPeriodicPoints(jsonCnt.get("len").asInt()).toString();
+                default -> cnt;
+            };
         }
-
-    }
-    public static void main(String[] args) throws IOException {
-        new Main().doMain(args);
+        writer.write(cnt);
+        System.out.println(cnt);
+        writer.close();
     }
 }

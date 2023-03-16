@@ -8,6 +8,7 @@ import org.reactionSystem.jsonGraph.JsonGraph;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Graph {
@@ -23,9 +24,7 @@ public class Graph {
         this.nodes = new HashMap<>();
     }
 
-    public static Graph fromJSON(String graphString) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode json = mapper.readTree(graphString);
+    public static Graph fromJSON(JsonNode json) throws JsonProcessingException {
         Graph graph = new Graph();
         var nodes = json.get("nodes");
         nodes.elements().forEachRemaining(e -> graph.addNode(
@@ -38,12 +37,18 @@ public class Graph {
         return graph;
     }
 
+    public static Graph fromJSON(String graphString) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = mapper.readTree(graphString);
+        return fromJSON(json);
+    }
+
     public void addNode(List<String> nodeName) {
         this.addNode(new Node(nodeName));
     }
 
     public void addNode(String nodeName, int id) {
-        this.addNode(new Node(List.of(nodeName.split("-")), id));
+        this.addNode(new Node(List.of(nodeName.equals("nil") ? new String[]{} : nodeName.split("-")), id));
     }
 
     public void addNode(String nodeName) {
@@ -78,13 +83,49 @@ public class Graph {
         Set<Node> res = new HashSet<>();
 
         for (List<String> l : composante) {
-            if ((n==0 && l.size() > 1) || (n!=0 && l.size()==n)) {
+            if ((n == 0 && l.size() > 1) || (n != 0 && l.size() == n)) {
                 l.forEach(e -> res.add(getNodes().get(e)));
 
             }
         }
 
         return res;
+    }
+
+    public Set<Node> getUltimatelyPeriodicPoint() {
+        Set<Node> PP = getPeriodicPoints();
+        Set<String> PPName = PP.stream().map(Node::getName).collect(Collectors.toSet());
+
+        Set<Node> res = new HashSet<>();
+
+        for (Map.Entry<String, Node> entry : getNodes().entrySet()) {
+            if (!PPName.contains(entry.getKey()) && dfs(entry.getKey(), new HashMap<>(), PPName)) {
+                res.add(entry.getValue());
+            }
+        }
+
+
+        return res;
+    }
+
+    private boolean dfs(String start, Map<String, Integer> visit, Set<String> PP) {
+        int index = 0;
+        Stack<String> s = new Stack<>();
+        s.push(start);
+        while (!s.isEmpty()) {
+            String v = s.pop();
+            if (visit.get(v) == null) { //v not visited
+                visit.put(v, index);
+                if (PP.contains(v)) {
+                    return true;
+                }
+                index += 1;
+                for (Map.Entry<String, Node> entry : getNodes().get(v).getSuccessors().entrySet()) {
+                    s.push(entry.getKey());
+                }
+            }
+        }
+        return false;
     }
 
     public void addEdgeToNil() {
@@ -99,7 +140,8 @@ public class Graph {
      * but not the inhibitors
      */
     public List<Node> getNodes(Set<String> activator, Set<String> inhibitors) {
-        Predicate<Node> nodesPred = e -> e.hasMolecule(activator) && e.hasNotMolecule(inhibitors);
+        var inhibitorEmpty = inhibitors.size() == 1 && inhibitors.contains("");
+        Predicate<Node> nodesPred = e -> e.hasMolecule(activator) && (inhibitorEmpty || e.hasNotMolecule(inhibitors));
         return filterNodes(nodesPred).toList();
     }
 

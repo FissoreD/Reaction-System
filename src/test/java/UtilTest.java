@@ -6,6 +6,8 @@ public class UtilTest {
     public static Graph graph2;
     public static Graph graph3;
 
+    public static Graph graph4;
+
     public static void setUp() {
         Node P1 = new Node("P1");
         Node P2 = new Node("P2");
@@ -40,6 +42,22 @@ public class UtilTest {
         C.addSuccessor(A);
 
         graph3= new Graph(A, B, C);
+
+        Node D = new Node("D");
+        Node E = new Node("E");
+        Node F = new Node("F");
+        Node G = new Node("G");
+        Node H = new Node("H");
+
+
+        D.addSuccessor(E);
+        E.addSuccessor(F);
+        F.addSuccessor(D);
+
+        G.addSuccessor(H);
+        H.addSuccessor(D);
+
+        graph4= new Graph(D, E, F, G, H);
     }
 
 
