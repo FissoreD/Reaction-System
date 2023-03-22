@@ -48,7 +48,7 @@ public class Tarjan {
                 stack.pop();
             }
             tmp.add(stack.peek());
-            if (tmp.size() > 1) {
+            if (tmp.size() > 1 || graph.getNodes().get(tmp.get(0)).getSuccessors().containsKey(tmp.get(0))) {
                 composante.add(tmp);
             }
             inStack.put(stack.peek(), false);
