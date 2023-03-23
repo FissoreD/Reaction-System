@@ -10,6 +10,7 @@ import org.kohsuke.args4j.Option;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +57,16 @@ public class Main {
             model.buildGraph();
             cnt = model.getGraph().toJson();
         } else {
+            final StringWriter sw = new StringWriter();
             var jsonCnt = json.get("cnt");
             Graph graph = Graph.fromJSON(jsonCnt.get("graph"));
-            cnt = switch (mode) {
-                case 2 -> graph.getFixedPoints().toString();
-                case 3 -> graph.getNPeriodicPoints(jsonCnt.get("len").asInt()).toString();
-                default -> cnt;
+            List<List<Node>> x = switch (mode) {
+                case 2 -> graph.getNPeriodicPoints(1);
+                case 3 -> graph.getNPeriodicPoints(jsonCnt.get("len").asInt());
+                default -> throw new RuntimeException("Invalid binder");
             };
+            cnt = x.stream().map(e -> e.stream().map(node -> node.id).toList()).toList().toString();
+            sw.close();
         }
         writer.write(cnt);
 //        System.out.println(cnt);

@@ -8,7 +8,6 @@ import org.reactionSystem.jsonGraph.JsonGraph;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Graph {
@@ -72,20 +71,20 @@ public class Graph {
         return filterNodes(fixedPointPred).toList();
     }
 
-    public Set<Node> getPeriodicPoints() {
+    public List<List<Node>> getPeriodicPoints() {
         return getNPeriodicPoints(0);
     }
 
-    public Set<Node> getNPeriodicPoints(int n) {
+    public List<List<Node>> getNPeriodicPoints(int n) {
         Tarjan tarjan = new Tarjan();
         tarjan.findSCCs_Tarjan(this);
         List<List<String>> composante = tarjan.getComposante();
-        Set<Node> res = new HashSet<>();
+        List<List<Node>> res = new ArrayList<>();
 
         for (List<String> l : composante) {
             if ((n == 0 && l.size() > 1) || (n != 0 && l.size() == n)) {
-                l.forEach(e -> res.add(getNodes().get(e)));
-
+                res.add(new ArrayList<>());
+                l.forEach(e -> res.get(res.size() - 1).add(getNodes().get(e)));
             }
         }
 
@@ -93,8 +92,14 @@ public class Graph {
     }
 
     public Set<Node> getUltimatelyPeriodicPoint() {
-        Set<Node> PP = getPeriodicPoints();
-        Set<String> PPName = PP.stream().map(Node::getName).collect(Collectors.toSet());
+        List<List<Node>> PP = getPeriodicPoints();
+        List<String> PPName = new ArrayList<>(); // PP.stream().map(Node::getName).collect(Collectors.toSet());
+
+        for (List<Node> nodeList : PP) {
+            for (Node node : nodeList) {
+                PPName.add(node.getName());
+            }
+        }
 
         Set<Node> res = new HashSet<>();
 
@@ -108,7 +113,7 @@ public class Graph {
         return res;
     }
 
-    private boolean dfs(String start, Map<String, Integer> visit, Set<String> PP) {
+    private boolean dfs(String start, Map<String, Integer> visit, List<String> PP) {
         int index = 0;
         Stack<String> s = new Stack<>();
         s.push(start);

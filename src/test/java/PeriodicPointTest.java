@@ -29,7 +29,7 @@ public class PeriodicPointTest {
     @Test
     public void periodicPoint3() {
         graph = UtilTest.graph3;
-        assertEquals(3, graph.getPeriodicPoints().size());
+        assertEquals(3, graph.getPeriodicPoints().get(0).size());
     }
 
     @Test
@@ -47,7 +47,13 @@ public class PeriodicPointTest {
     @Test
     public void periodicPoint6() {
         graph = UtilTest.graph3;
-        assertEquals(3, graph.getNPeriodicPoints(3).size());
+        assertEquals(3, graph.getNPeriodicPoints(3).get(0).size());
+    }
+
+    @Test
+    public void periodicPoint7() {
+        graph = UtilTest.graph2;
+        assertEquals(1, graph.getNPeriodicPoints(1).size());
     }
 }
 
