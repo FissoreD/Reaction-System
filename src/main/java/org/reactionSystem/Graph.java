@@ -8,7 +8,6 @@ import org.reactionSystem.jsonGraph.JsonGraph;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Graph {
@@ -85,8 +84,7 @@ public class Graph {
         for (List<String> l : composante) {
             if ((n == 0 && l.size() > 1) || (n != 0 && l.size() == n)) {
                 res.add(new ArrayList<>());
-                l.forEach(e -> res.get(res.size()-1).add(getNodes().get(e)));
-
+                l.forEach(e -> res.get(res.size() - 1).add(getNodes().get(e)));
             }
         }
 
