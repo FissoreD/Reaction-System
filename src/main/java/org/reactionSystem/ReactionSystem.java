@@ -16,10 +16,18 @@ public class ReactionSystem {
         this.molecules = new HashSet<>();
     }
 
+    /**
+     * 
+     * @return the graph of the reaction system
+     */
     public Graph getGraph() {
         return graph;
     }
 
+    /**
+     * 
+     * @param rule the rule to add to the reaction system
+     */
     public void addRule(Rule rule) {
         this.rules.add(rule);
         molecules.addAll(rule.getActivators());
@@ -27,6 +35,9 @@ public class ReactionSystem {
         molecules.addAll(rule.getResult());
     }
 
+    /**
+     * build the graph of the reaction system
+     */
     public void buildGraph() {
         List<String> l = this.molecules.stream().toList();
         var maxNumberOfSubSets = 1 << l.size();

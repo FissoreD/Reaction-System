@@ -18,18 +18,32 @@ import static org.kohsuke.args4j.OptionHandlerFilter.ALL;
 
 public class Main {
 
+    // receives other command line parameters than options
     @Argument
     private List<String> arguments = new ArrayList<>();
+
+    // receives option command line parameters
     @Option(name = "-f", usage = "set file path to save graph in")
     private String fileName;
 
     @Option(name = "-cnt", usage = "the content of the request")
     private String cntJson;
 
+    /**
+     * 
+     * @param args the arguments to parse
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         new Main().doMain(args);
     }
 
+    /**
+     * 
+     * @param args the arguments to parse
+     * @throws IOException
+     *                     Parse the arguments and run the program
+     */
     public void doMain(String[] args) throws IOException {
         CmdLineParser parser = new CmdLineParser(this);
         arguments = arguments;
@@ -69,7 +83,7 @@ public class Main {
             sw.close();
         }
         writer.write(cnt);
-//        System.out.println(cnt);
+        // System.out.println(cnt);
         writer.close();
     }
 }

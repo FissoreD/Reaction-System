@@ -21,35 +21,63 @@ public class Rule {
     }
 
     public Rule() {
-        this(new String[]{}, new String[]{}, new String[]{});
+        this(new String[] {}, new String[] {}, new String[] {});
     }
 
+    /**
+     * 
+     * @param name the name of the molecule to add to the activators
+     *             add the molecule to the activators of the rule
+     */
     public void addActivator(String... name) {
         this.activators.addAll(Arrays.asList(name));
     }
 
+    /**
+     * 
+     * @param name the name of the molecule to add to the inhibitors
+     *             add the molecule to the inhibitors of the rule
+     */
     public void addInhibitor(String... name) {
         this.inhibitors.addAll(Arrays.asList(name));
     }
 
+    /**
+     * 
+     * @param name the name of the molecule to add to the result
+     *             add the molecule to the result of the rule
+     */
     public void addResult(String... name) {
         this.result.addAll(Arrays.asList(name));
     }
 
+    /**
+     * 
+     * @return the activators of the rule
+     */
     public Set<String> getActivators() {
         return activators;
     }
 
+    /**
+     * 
+     * @return the inhibitors of the rule
+     */
     public Set<String> getInhibitors() {
         return inhibitors;
     }
 
+    /**
+     * 
+     * @return the result of the rule
+     */
     public Set<String> getResult() {
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("\nRule%d{activators=" + activators + ", inhibitors=" + inhibitors + ", result=" + result + "}", id);
+        return String.format(
+                "\nRule%d{activators=" + activators + ", inhibitors=" + inhibitors + ", result=" + result + "}", id);
     }
 }

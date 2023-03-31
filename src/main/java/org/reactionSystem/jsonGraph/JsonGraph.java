@@ -18,6 +18,12 @@ public class JsonGraph {
         edges = new ArrayList<>();
     }
 
+    /**
+     * 
+     * @param g the graph to convert
+     * @return the json representation of the graph
+     * @throws JsonProcessingException
+     */
     public static String generateJSONGraph(Graph g) throws JsonProcessingException {
         JsonGraph graph = new JsonGraph();
         NodeData nd;
@@ -40,10 +46,18 @@ public class JsonGraph {
         return new ObjectMapper().writeValueAsString(graph);
     }
 
+    /**
+     * 
+     * @return the list of nodes of the graph
+     */
     public List<JsonNode> getNodes() {
         return nodes;
     }
 
+    /**
+     * 
+     * @return the list of edges of the graph
+     */
     public List<JsonEdge> getEdges() {
         return edges;
     }
@@ -57,10 +71,18 @@ public class JsonGraph {
             this.name = node.getName().length() == 0 ? "nil" : node.getName();
         }
 
+        /**
+         * 
+         * @return the id of the node
+         */
         public String getId() {
             return id;
         }
 
+        /**
+         * 
+         * @return the name of the node
+         */
         public String getName() {
             return name;
         }
@@ -75,10 +97,18 @@ public class JsonGraph {
             this.classes = classes;
         }
 
+        /**
+         * 
+         * @return the data of the node
+         */
         public NodeData getData() {
             return data;
         }
 
+        /**
+         * 
+         * @return the classes of the node
+         */
         public List<String> getClasses() {
             return classes;
         }
@@ -99,22 +129,42 @@ public class JsonGraph {
             this.targetName = target.getName();
         }
 
+        /**
+         * 
+         * @return the id of the edge
+         */
         public String getId() {
             return id;
         }
 
+        /**
+         * 
+         * @return the id of the source node
+         */
         public String getSource() {
             return source;
         }
 
+        /**
+         * 
+         * @return the id of the target node
+         */
         public String getTarget() {
             return target;
         }
 
+        /**
+         * 
+         * @return the name of the source node
+         */
         public String getSourceName() {
             return sourceName;
         }
 
+        /**
+         * 
+         * @return the name of the target node
+         */
         public String getTargetName() {
             return targetName;
         }
@@ -129,10 +179,18 @@ public class JsonGraph {
             this.classes = classes;
         }
 
+        /**
+         * 
+         * @return the data of the edge
+         */
         public EdgeData getData() {
             return data;
         }
 
+        /**
+         * 
+         * @return the list of classes of the edge
+         */
         public List<String> getClasses() {
             return classes;
         }

@@ -1,6 +1,5 @@
 package org.reactionSystem;
 
-
 import java.util.*;
 
 public class Tarjan {
@@ -11,11 +10,14 @@ public class Tarjan {
     private Map<String, Boolean> inStack = new HashMap<>();
     private Stack<String> stack = new Stack<>();
     private int time = 0;
-    private int n;
 
     private List<List<String>> composante = new ArrayList<>();
 
-
+    /**
+     * 
+     * @param graph the graph to find the SCC
+     *              find the SCC of the graph
+     */
     private void DFS(String u) {
         dfs.put(u, time);
         low.put(u, time);
@@ -28,21 +30,21 @@ public class Tarjan {
             return;
 
         for (Map.Entry<String, Node> entry : temp.entrySet()) {
-            if (dfs.get(entry.getKey()) == -1) //If v is not visited
+            if (dfs.get(entry.getKey()) == -1) // If v is not visited
             {
                 DFS(entry.getKey());
                 low.put(u, Math.min(low.get(u), low.get(entry.getKey())));
             }
-//Differentiate back-edge and cross-edge
-            else if (inStack.get(entry.getKey())) //Back-edge case
+            // Differentiate back-edge and cross-edge
+            else if (inStack.get(entry.getKey())) // Back-edge case
                 low.put(u, Math.min(low.get(u), dfs.get(entry.getKey())));
         }
 
-        if (Objects.equals(low.get(u), dfs.get(u))) //If u is head node of SCC
+        if (Objects.equals(low.get(u), dfs.get(u))) // If u is head node of SCC
         {
             List<String> tmp = new ArrayList<>();
             while (!Objects.equals(stack.peek(), u)) {
-                //adj.getNodes().put(stack.peek(), new int[0]);
+                // adj.getNodes().put(stack.peek(), new int[0]);
                 tmp.add(stack.peek());
                 inStack.put(stack.peek(), false);
                 stack.pop();
@@ -56,16 +58,16 @@ public class Tarjan {
         }
     }
 
+    /**
+     * @param graph the graph to find the strongly connected components
+     */
     public void findSCCs_Tarjan(Graph graph) {
         composante = new ArrayList<>();
         this.graph = graph;
-        this.n = graph.getNodes().size();
 
         this.dfs = new HashMap<>();
         this.low = new HashMap<>();
         this.inStack = new HashMap<>();
-
-        this.n -= 1;
 
         for (Map.Entry<String, Node> entry : graph.getNodes().entrySet()) {
             dfs.put(entry.getKey(), -1);
@@ -74,10 +76,13 @@ public class Tarjan {
         }
         for (Map.Entry<String, Node> entry : graph.getNodes().entrySet()) {
             if (dfs.get(entry.getKey()) == -1)
-                DFS(entry.getKey());   // call DFS for each undiscovered node.
+                DFS(entry.getKey()); // call DFS for each undiscovered node.
         }
     }
 
+    /**
+     * @return the list of strongly connected components
+     */
     public List<List<String>> getComposante() {
         return composante;
     }
