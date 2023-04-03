@@ -10,12 +10,27 @@ import java.util.List;
 
 public class Parser {
 
+    /**
+     * 
+     * @param cnt the line to parse
+     * @param pos the position of the part to parse
+     * @return the atoms at the given position
+     */
     public static String[] getAtoms(String[] cnt, int pos) {
         var s = pos < cnt.length ? cnt[pos] : "";
         var cleanStr = s.strip();
-        return cleanStr.equals("") ? new String[]{} : cleanStr.split(" ");
+        return cleanStr.equals("") ? new String[] {} : cleanStr.split(" ");
     }
 
+    /**
+     * 
+     * @param input the input to parse
+     * @return the reaction system
+     *         build a reaction system from a list of string
+     *         for each line of the input, the line is split into 3 parts the first
+     *         part is the attractors, the second part is the inhibitors and the
+     *         third part is the result
+     */
     public static ReactionSystem parseCnt(List<String> input) {
         ReactionSystem reactionSystem = new ReactionSystem();
         input.forEach(line -> {
@@ -28,15 +43,29 @@ public class Parser {
         return reactionSystem;
     }
 
+    /**
+     * 
+     * @param input the input to parse
+     * @return the reaction system
+     */
     public static ReactionSystem parseCnt(String... input) {
         return parseCnt(List.of(input));
     }
 
+    /**
+     * 
+     * @param input the input to parse
+     * @return the reaction system
+     */
     public static ReactionSystem parseCnt(String input) {
         return parseCnt(input.split("\n"));
     }
 
-
+    /**
+     * 
+     * @param fileName the file to parse
+     * @return the reaction system
+     */
     public static ReactionSystem parseFile(String fileName) {
         Path filePath = Paths.get(fileName);
         Charset charset = StandardCharsets.UTF_8;
